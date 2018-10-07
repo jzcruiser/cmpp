@@ -1,0 +1,18 @@
+HSQS:
+  GetUrl: http://116.62.30.185:1218/?name=ins_cmpp&opt=get
+  PutUrl: http://116.62.30.185:1218/?name=ins_resp&opt=put
+  Cycele: 1
+CMPP:
+  GateAddr: 127.0.0.1
+  GatePort: 17890
+  UserName: 150011
+  Password: 150011
+  ServiceId: yqn
+  PlatformCode: 1064899150011
+  SlitSz: 16
+  BufSz: 4096
+CLIENT:
+  SendBufSz: 1024
+  ReqOverTimes: 5
+  RecvBufSz: 1024
+  RspOverTimes: 5
