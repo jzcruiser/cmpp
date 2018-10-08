@@ -271,7 +271,7 @@ func (cmpp *CMPP) encodeLogin() (*[]byte, error) {
 	copy(authrc[6:], []byte{0, 0, 0, 0, 0, 0, 0, 0, 0})
 	copy(authrc[15:], []byte(cmpp.Password)[:len(cmpp.Password)])
 	copy(authrc[15+len(cmpp.Password):], []byte(tm.Format("0102150405"))[:10])
-	connect.AuthSource = md5.Sum(authrc)
+	connect.AuthSource = md5.Sum(authrc[:25+len(cmpp.Password)])
 	// get timestamp
 	ts, _ := strconv.Atoi(tm.Format("0102150405"))
 	connect.Timestamp = uint32(ts)
