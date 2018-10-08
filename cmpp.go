@@ -263,7 +263,7 @@ func (cmpp *CMPP) encodeLogin() (*[]byte, error) {
 		},
 		Version: 0x30,
 	}
-	copy(connect.SrcAddr[:], []byte(cmpp.UserName)[:6])
+	copy(connect.SrcAddr[:], []byte(cmpp.UserName)[:len(cmpp.UserName)])
 	// get auth source
 	tm := time.Now().Local()
 	authrc := make([]byte, 100)
@@ -316,6 +316,9 @@ func (cmpp *CMPP) login() (bool, error) {
 	if err != nil {
 		return false, err
 	}
+	log.WithFields(logrus.Fields{
+		"bytes": fmt.Sprintf("%x", *logbytes),
+	}).Info("send login bytes.")
 	conn.Write(*logbytes)
 	for {
 		rcvbytes := make([]byte, 1024)
