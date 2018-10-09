@@ -33,7 +33,7 @@ stat 取值有
   * 1:  消息已下发  
   * 2:  消息已下达  
   * 3:  设备应答，此时msg内容为对端响应内容。
-  * 4:  发送失败, 此时msg内容为失败原因。  
+  * 4:  发送失败，此时msg内容为失败原因。  
   
  ## 测试  
  模拟cmpp服务端 [easy](https://github.com/svnwell/easy.git)
