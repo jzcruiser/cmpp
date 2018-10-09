@@ -387,8 +387,9 @@ func (cmpp *CMPP) encodeSubmit(id uint32, sims []string, msg string, survive int
 		AtTime:          [17]byte{0},
 		DestUsrTl:       byte(len(sims)),
 	}
-	submit.TotalLen = uint32(143 + len(sims)*32 + len(msg))
+	submit.TotalLen = uint32(163 + len(sims)*32 + len(msg))
 	copy(submit.ServiceId[:], []byte(cmpp.ServiceId)[:len(cmpp.ServiceId)])
+	copy(submit.MsgSrc[:], []byte(cmpp.UserName)[:len(cmpp.UserName)])
 	if survive != 0 {
 		tm := time.Unix(survive, 0)
 		copy(submit.ValidTime[:], []byte(fmt.Sprintf("%02d%02d%02d%02d%02d%02d%d32+",
@@ -408,7 +409,7 @@ func (cmpp *CMPP) encodeSubmit(id uint32, sims []string, msg string, survive int
 
 	rst := buf.Bytes()
 
-	rest := make([]byte, 32*len(sims)+2+len(msg))
+	rest := make([]byte, 32*len(sims)+2+len(msg)+20)
 	cursor := len(rst)
 
 	rst = append(rst, rest...)
@@ -497,7 +498,9 @@ func (cmpp *CMPP) submitMsg(content interface{}) {
 		case <-broken:
 			return
 		case req <- *subbytes:
-			log.Info("send msg")
+			log.WithFields(logrus.Fields{
+				"bytes": fmt.Sprintf("%x", *subbytes),
+			}).Info("send msg")
 			break
 		}
 		select {
