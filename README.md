@@ -5,7 +5,7 @@ centos7、 fedora22
 ## 依赖
 * [httpsqs](http://zyan.cc/httpsqs/)  
 设计上使用httpsqs实现与客户端交互，客户端从httpsqs轮询待发消息，收到消息后将其发送给移动网关。在收到网关消息后将消息推送给httpsqs。用户在使用客户端时
-只需要访问httpsqs即可。当然也可以提供webapi站点作为客户端的请求与推送地址，只需要将这些地址配置到配置文件conf.yaml中。
+只需要访问httpsqs即可。当然也可以提供webapi站点作为客户端的请求与推送地址，只需要将这些地址配置到配置文件conf.yaml中即可。
 ## 消息格式
 用户可以通过想httpsqs 推送消息来发送消息，通过从httpsqs消息拉取消息还回去消息应答。消息请求与应答均采用json格式。
 * 消息请求  
