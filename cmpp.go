@@ -811,7 +811,7 @@ EXIT:
 			go cmpp.procBytes(rspBytes)
 		}
 	}
-	fmt.Println("wait for wg2 closed.")
+	log.Warn("wait for wg2 closed.")
 	wg2.Wait()
 	close(readstopped)
 }

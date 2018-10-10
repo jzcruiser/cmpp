@@ -2,10 +2,10 @@ package main
 
 import (
 	"bytes"
-	"fmt"
 	"io/ioutil"
 	"net"
 	"net/http"
+	"os"
 	"sync"
 	"sync/atomic"
 	"time"
@@ -86,6 +86,14 @@ func init() {
 	// access semphore
 	sem = semAccess{sync.Mutex{}, conf.CMPP.SlitSz, make(map[uint32]string)}
 
+	logrus.SetFormatter(&logrus.JSONFormatter{})
+	logrus.SetLevel(logrus.InfoLevel)
+	file, err := os.OpenFile("cmpp.log", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0666)
+	if err != nil {
+		logrus.Fatal("can't open cmpp.log")
+		os.Exit(1)
+	}
+	logrus.SetOutput(file)
 }
 
 func worker() {
@@ -118,15 +126,15 @@ func worker() {
 	// when getter stopped, wait for all gorutines that write to req stopped.
 	sqs.getter()
 	wg.Wait()
-	fmt.Println("wg exited.")
+	logrus.Warn("wg exited.")
 	<-astopped
-	fmt.Println("active exited.")
+	logrus.Warn("active exited.")
 	close(req)
 	<-writestopped
-	fmt.Println("writer exited.")
+	logrus.Warn("writer exited.")
 	cmpp.conn.SetReadDeadline(time.Now())
 	<-readstopped
-	fmt.Println("reader exited.")
+	logrus.Warn("reader exited.")
 
 	canceled = make(chan struct{})
 	atomic.StoreInt32(&cmpp.actived, 0)

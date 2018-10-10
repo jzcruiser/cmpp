@@ -3,7 +3,8 @@ HSQS:
   PutUrl: http://116.62.30.185:1218/?name=ins_resp&opt=put
   Cycele: 1
 CMPP:
-  GateAddr: 183.230.96.94
+  # GateAddr: 183.230.96.94
+  GateAddr: 127.0.0.1
   GatePort: 17890
   UserName: 150011
   Password: 150011
