@@ -38,7 +38,4 @@ stat 取值有
  ## 测试  
  模拟cmpp服务端 [easy](https://github.com/svnwell/easy.git)
  
- ## 联系我
- `QQ`   : 786558585@qq.com  
- `WCHAT`: x_dotor  
- `EMAIL`: x_dotor@163.com
+
